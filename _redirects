@@ -1,0 +1,7 @@
+# Netlify / Cloudflare Pages: only used if Cedar signs and we migrate.
+# Keep the live site's URLs alive.
+/events      /events.html   200
+/events/     /events.html   200
+# Waiver PDFs: copy the current files into /s/ at the same names at migration.
+# /s/1st-Adult-Waiver-Website-2026.pdf
+# /s/1st-Minor-Waiver-Website-2026.pdf
