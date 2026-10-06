@@ -5,6 +5,7 @@
   var doc = document.documentElement;
   doc.classList.remove("no-js");
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
   /* ---------- header: condense on scroll, mobile bar ---------- */
   var header = document.querySelector(".site-header");
@@ -24,6 +25,11 @@
   /* ---------- mobile nav ---------- */
   var toggle = document.querySelector(".nav-toggle");
   if (toggle) {
+    var closeNav = function () {
+      document.body.classList.remove("nav-open");
+      toggle.setAttribute("aria-expanded", "false");
+      toggle.setAttribute("aria-label", "Open menu");
+    };
     toggle.addEventListener("click", function () {
       if (header) doc.style.setProperty("--nav-top", Math.max(0, header.getBoundingClientRect().bottom) + "px");
       var open = document.body.classList.toggle("nav-open");
@@ -31,37 +37,28 @@
       toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
     });
     document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && document.body.classList.contains("nav-open")) {
-        document.body.classList.remove("nav-open");
-        toggle.setAttribute("aria-expanded", "false");
-        toggle.focus();
-      }
+      if (e.key === "Escape" && document.body.classList.contains("nav-open")) { closeNav(); toggle.focus(); }
     });
-    document.querySelectorAll(".site-nav a").forEach(function (a) {
-      a.addEventListener("click", function () {
-        document.body.classList.remove("nav-open");
-        toggle.setAttribute("aria-expanded", "false");
-      });
-    });
+    document.querySelectorAll(".site-nav a").forEach(function (a) { a.addEventListener("click", closeNav); });
   }
 
-  /* ---------- scroll reveals with stagger ---------- */
+  /* ---------- scroll reveals ---------- */
   document.querySelectorAll("[data-stagger]").forEach(function (group) {
     Array.prototype.forEach.call(group.children, function (child, i) {
       child.classList.add("reveal");
       child.style.setProperty("--i", Math.min(i, 6));
     });
   });
-  var reveals = document.querySelectorAll(".reveal");
+  var revealables = document.querySelectorAll(".reveal, .reveal-wipe, .vscale");
   if (reduceMotion || !("IntersectionObserver" in window)) {
-    reveals.forEach(function (el) { el.classList.add("is-in"); });
+    revealables.forEach(function (el) { el.classList.add("is-in"); });
   } else {
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) { entry.target.classList.add("is-in"); io.unobserve(entry.target); }
       });
-    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
-    reveals.forEach(function (el) { io.observe(el); });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.1 });
+    revealables.forEach(function (el) { io.observe(el); });
   }
 
   /* ---------- slow parallax: full-bleed photo bands only ---------- */
@@ -73,8 +70,8 @@
       bands.forEach(function (img) {
         var r = img.parentElement.getBoundingClientRect();
         if (r.bottom < 0 || r.top > vh) return;
-        var progress = (r.top + r.height / 2 - vh / 2) / vh; // -1 .. 1
-        img.style.transform = "translate3d(0," + (progress * -8).toFixed(2) + "%,0)";
+        var progress = (r.top + r.height / 2 - vh / 2) / vh;
+        img.style.transform = "translate3d(0," + (progress * -9).toFixed(2) + "%,0)";
       });
       bandTick = false;
     };
@@ -82,6 +79,28 @@
       if (!bandTick) { window.requestAnimationFrame(moveBands); bandTick = true; }
     }, { passive: true });
     moveBands();
+  }
+
+  /* ---------- reticle follows the pointer over the hero ---------- */
+  var hero = document.querySelector(".hero");
+  var reticle = document.querySelector(".reticle");
+  if (hero && reticle && finePointer && !reduceMotion) {
+    var tx = 0, ty = 0, cx = 0, cy = 0, running = false;
+    var follow = function () {
+      cx += (tx - cx) * 0.16;
+      cy += (ty - cy) * 0.16;
+      reticle.style.transform = "translate3d(" + cx.toFixed(1) + "px," + cy.toFixed(1) + "px,0)";
+      if (Math.abs(tx - cx) > 0.3 || Math.abs(ty - cy) > 0.3) window.requestAnimationFrame(follow);
+      else running = false;
+    };
+    hero.addEventListener("pointermove", function (e) {
+      var r = hero.getBoundingClientRect();
+      tx = e.clientX - r.left; ty = e.clientY - r.top;
+      var overUi = e.target.closest("a, button, .clock");
+      reticle.classList.toggle("is-on", !overUi);
+      if (!running) { running = true; window.requestAnimationFrame(follow); }
+    });
+    hero.addEventListener("pointerleave", function () { reticle.classList.remove("is-on"); });
   }
 
   /* ---------- count-up: verified figures only (10 acres) ---------- */
@@ -92,7 +111,7 @@
     var cio = new IntersectionObserver(function (entries) {
       if (!entries[0].isIntersecting) return;
       cio.disconnect();
-      var start = null, dur = 1100;
+      var start = null, dur = 1200;
       var step = function (t) {
         if (!start) start = t;
         var p = Math.min((t - start) / dur, 1);
@@ -105,49 +124,69 @@
   });
 
   /* ---------- events: hide past dates, flag the next one ---------- */
-  // Event cards carry data-date="YYYY-MM-DD" and data-end="HH:MM". Dates are their
-  // published listings; nothing here invents an event.
-  var today = new Date();
-  var cards = Array.prototype.slice.call(document.querySelectorAll(".event-card[data-date]"));
-  var upcoming = cards.filter(function (card) {
-    var parts = card.getAttribute("data-date").split("-");
-    var end = (card.getAttribute("data-end") || "23:59").split(":");
-    var endAt = new Date(+parts[0], +parts[1] - 1, +parts[2], +end[0], +end[1]);
-    var past = endAt < today;
-    card.classList.toggle("is-past", past);
+  // Rows carry data-date (YYYY-MM-DD), data-start and data-end (HH:MM) from their
+  // published listings. Nothing here invents an event.
+  function at(dateStr, timeStr) {
+    var d = dateStr.split("-"), t = (timeStr || "00:00").split(":");
+    return new Date(+d[0], +d[1] - 1, +d[2], +t[0], +t[1]);
+  }
+  var now = new Date();
+  var rows = Array.prototype.slice.call(document.querySelectorAll("[data-date][data-end]"));
+  var upcoming = rows.filter(function (row) {
+    var past = at(row.getAttribute("data-date"), row.getAttribute("data-end")) < now;
+    row.classList.toggle("is-past", past);
     return !past;
   });
   if (upcoming.length) {
     var firstDate = upcoming[0].getAttribute("data-date");
-    cards.forEach(function (c) { c.classList.toggle("is-next", c.getAttribute("data-date") === firstDate); });
+    rows.forEach(function (r) { r.classList.toggle("is-next", r.getAttribute("data-date") === firstDate); });
   }
-  // hero "next game" fact mirrors the first upcoming card
-  var nextSlot = document.querySelector("[data-next-event]");
-  if (nextSlot) {
-    if (upcoming.length) {
-      var n = upcoming[0];
-      nextSlot.innerHTML = n.getAttribute("data-summary");
+  document.querySelectorAll("[data-empty-events]").forEach(function (el) { el.hidden = upcoming.length > 0; });
+
+  /* ---------- countdown clock to the next game ---------- */
+  var clock = document.querySelector("[data-clock]");
+  if (clock) {
+    var parts = {};
+    clock.querySelectorAll("[data-u]").forEach(function (b) { parts[b.getAttribute("data-u")] = b; });
+    var title = clock.querySelector("[data-clock-title]");
+    var when = clock.querySelector("[data-clock-when]");
+    var status = clock.querySelector("[data-clock-status]");
+    var next = upcoming[0];
+    if (!next) {
+      if (title) title.innerHTML = '<span class="ph">[CONFIRM — next event date]</span>';
+      if (when) when.textContent = "Check Facebook for the next game.";
     } else {
-      nextSlot.innerHTML = '<span class="ph">[CONFIRM — next event date]</span>';
+      var startAt = at(next.getAttribute("data-date"), next.getAttribute("data-start"));
+      var endAt = at(next.getAttribute("data-date"), next.getAttribute("data-end"));
+      if (title) title.textContent = next.getAttribute("data-title");
+      if (when) when.innerHTML = next.getAttribute("data-when");
+      var pad = function (n) { return (n < 10 ? "0" : "") + n; };
+      var tick = function () {
+        var t = new Date();
+        var ms = Math.max(0, startAt - t);
+        if (status) status.textContent = t >= startAt && t < endAt ? "On now" : "Counting down";
+        var s = Math.floor(ms / 1000);
+        if (parts.d) parts.d.textContent = pad(Math.floor(s / 86400));
+        if (parts.h) parts.h.textContent = pad(Math.floor(s % 86400 / 3600));
+        if (parts.m) parts.m.textContent = pad(Math.floor(s % 3600 / 60));
+        if (parts.s) parts.s.textContent = pad(s % 60);
+      };
+      tick();
+      window.setInterval(tick, 1000);
     }
   }
-  document.querySelectorAll("[data-empty-events]").forEach(function (el) {
-    el.hidden = upcoming.length > 0;
-  });
 
   /* ---------- shop category filter ---------- */
   var catButtons = document.querySelectorAll(".shop-cats button");
-  if (catButtons.length) {
-    catButtons.forEach(function (btn) {
-      btn.addEventListener("click", function () {
-        var cat = btn.getAttribute("data-cat");
-        catButtons.forEach(function (b) { b.setAttribute("aria-pressed", b === btn ? "true" : "false"); });
-        document.querySelectorAll(".shop-grid [data-cat]").forEach(function (item) {
-          item.hidden = !(cat === "all" || item.getAttribute("data-cat") === cat);
-        });
+  catButtons.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var cat = btn.getAttribute("data-cat");
+      catButtons.forEach(function (b) { b.setAttribute("aria-pressed", b === btn ? "true" : "false"); });
+      document.querySelectorAll(".shop-grid [data-cat]").forEach(function (item) {
+        item.hidden = !(cat === "all" || item.getAttribute("data-cat") === cat);
       });
     });
-  }
+  });
 
   /* ---------- party estimate (published rates only) ---------- */
   var partyForm = document.getElementById("party-form");
@@ -173,12 +212,11 @@
         if (leadNote) leadNote.hidden = true;
         return;
       }
-      var p = dateIn.value.split("-");
-      var d = new Date(+p[0], +p[1] - 1, +p[2]);
+      var d = at(dateIn.value, "00:00");
       var weekend = d.getDay() === 0 || d.getDay() === 6;
       var rate = weekend ? 20 : 15;
       var total = rate * n;
-      out.day.textContent = d.toLocaleDateString("en-US", { weekday: "long", month: "short", day: "numeric" }) + (weekend ? " · weekend" : " · weekday");
+      out.day.textContent = d.toLocaleDateString("en-US", { weekday: "long", month: "short", day: "numeric" }) + (weekend ? " (weekend)" : " (weekday)");
       out.rate.textContent = "$" + rate + " / person";
       out.total.textContent = n ? "$" + total : "—";
       out.deposit.textContent = weekend ? (n ? "$" + (total / 2) + " (50%)" : "50%") : "No money down";
@@ -186,7 +224,8 @@
         ? "Weekend parties: 50% down when scheduling — non-refundable. Admission only; rentals are extra."
         : "Weekday parties: no money down. Admission only; rentals are extra.";
       if (leadNote) {
-        var days = Math.round((d - new Date(today.getFullYear(), today.getMonth(), today.getDate())) / 86400000);
+        var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        var days = Math.round((d - today) / 86400000);
         leadNote.hidden = !(days >= 0 && days < 14);
       }
     };
@@ -200,11 +239,8 @@
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       if (!form.checkValidity()) { form.reportValidity(); return; }
-      var status = form.querySelector(".form__status");
-      if (status) {
-        status.classList.add("is-shown");
-        status.focus();
-      }
+      var st = form.querySelector(".form__status");
+      if (st) { st.classList.add("is-shown"); st.focus(); }
     });
   });
 
@@ -217,8 +253,7 @@
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
           tocLinks.forEach(function (a) { a.classList.remove("is-active"); });
-          var link = map[entry.target.id];
-          if (link) link.classList.add("is-active");
+          if (map[entry.target.id]) map[entry.target.id].classList.add("is-active");
         }
       });
     }, { rootMargin: "-30% 0px -60% 0px" });
@@ -228,6 +263,5 @@
     });
   }
 
-  /* ---------- footer year ---------- */
   document.querySelectorAll("[data-year]").forEach(function (el) { el.textContent = new Date().getFullYear(); });
 })();

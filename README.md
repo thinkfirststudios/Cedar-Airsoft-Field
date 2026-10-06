@@ -18,14 +18,16 @@ Built 2026-10-06 from `PROMPT.md`. Plain static HTML/CSS/JS, no build step. Open
 | `contact.html` | Contact cards, demo form, `[STAFF PHOTO]` frames | section of `/` |
 | `privacy.html` | **DRAFT** privacy page, written from what the site does | — (new) |
 
-## Design
+## Design (v2: tactical direction, 2026-10-06)
 
-- **Palette sampled from their live Squarespace theme** (`site.css`): forest `#1C231B` (their `--darkAccent`), bone `#E2DFD6` (their `--lightAccent`). Their indigo theme accent (`hsl(242,65%,40%)`) is **not** carried over; cedar-bark `#9B4526` is a proposed second accent. `[CONFIRM brand hex from logo files]`
-- **Type:** Exo 2 (kept from their site) + Barlow body.
-- **Motif:** the chrono zip-tie — coloured tag swatches in the table, a tie-shaped mark on every eyebrow.
-- **Logo:** text wordmark + a simple cedar-tree glyph. Placeholder until we have their vectors.
-- Daylight-led, no camo, no stencils, no neon green.
-- Motion: staggered reveals (~420ms), slow parallax on photo bands only, condensing sticky header (phone always visible), 10-acre count-up, sticky mobile bar (Events + Waiver). Everything is off under `prefers-reduced-motion`.
+Redesigned after Alex's feedback ("looks vibecoded"). References: dark paintball template with olive, khaki and slate tiles, and a red diagonal-slash paintball template. The goal is military in feel but still fun. This **overrides the brief's daylight direction** by Alex's call. The brief's hard bans still hold: no camo, stencils, skulls or bullet holes, and no neon-green-on-black.
+
+- **Palette, field-kit colours:** night olive `#10150F`, olive drab `#4F5B32`, khaki `#C8B98C`, coyote `#93714D`, slate `#3B4650`, bone `#EEE8D9`. Blaze `#E8642A` is used only for actions. Their live theme dark (`#1C231B`) sits inside this range. `[CONFIRM brand hex from logo files]`
+- **Type:** Saira Condensed for headlines. Exo 2 is kept for the wordmark (their current font). Barlow is the body face.
+- **The big idea:** a live countdown clock in the hero to their next published game, set against a diagonal blaze slash.
+- **Structure:** diagonal section cuts, HUD corner brackets on key photos, the schedule as briefing rows coloured by game type, first-game steps as olive, khaki, coyote and slate tiles, and a price list with dotted leaders like a supply sheet.
+- **Motion:** a hero load sequence (headline rises, slash draws in, khaki sheen), a reticle that follows the pointer over the hero (mouse only), the game-modes ticker, and a to-scale velocity bar on chrono that fills on scroll. Also a 10-acre count-up, parallax bands, the condensing header, and the sticky mobile bar (Events + Waiver). All of it is off under `prefers-reduced-motion`.
+- Cedar is a rec field, not a milsim operator. The site only borrows the look; the copy doesn't claim milsim events.
 
 ## Compliance notes (from PROMPT.md)
 
