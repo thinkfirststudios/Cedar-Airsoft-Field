@@ -31,6 +31,12 @@ Third pass, at Alex's request for a "Ghost Recon UI". It's a game-HUD interface 
 - The compass heading and the waypoint's position on it are decorative. They don't claim to be a real bearing to the field.
 - Cedar is a rec field, not a milsim operator; the copy doesn't claim milsim events.
 
+### v4 refinements (2026-10-06, review feedback)
+
+- **Headlines:** Chakra Petch 700, chosen from a side-by-side test of eight faces. Its chamfered corners read like stencilled equipment plates without being a stencil font. The hero and page titles use the italic and a worn-print speckle mask. Barlow Condensed stays for the small HUD labels.
+- **Light sections:** every `section--bone` / `section--paper` is now an off-white "canvas" theme driven by CSS variables, so the same components flip automatically. The tactical map stays a dark inset.
+- **Texture:** film grain over the whole page; ripstop weave (the grid of military fabric, not camo) on light and dark sections; generated topographic contours (`assets/tex/topo-*.svg`, about 23 KB each); hazard-tape tabs on the light sections and footer; a faint hatch inside panels.
+
 ## Compliance notes (from PROMPT.md)
 
 - Chrono table reproduced exactly from the brief (and checked against their live homepage). One shared source in the generator, so it's identical on Home, Events and Rules.
