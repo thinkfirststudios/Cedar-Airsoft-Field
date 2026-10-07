@@ -12,15 +12,16 @@
 <title>Cedar Airsoft Field — Outdoor Airsoft near Grand Rapids, MI</title>
 <meta name="description" content="Cedar Airsoft Field: 10 acres of outdoor airsoft just north of Grand Rapids in Cedar Springs, MI. Rec days, night games, private parties, $20 admission, rentals and a field shop.">
 <meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#10150f">
+<meta name="theme-color" content="#0a0e0d">
 <meta property="og:title" content="Cedar Airsoft Field — Outdoor Airsoft near Grand Rapids, MI">
 <meta property="og:description" content="Cedar Airsoft Field: 10 acres of outdoor airsoft just north of Grand Rapids in Cedar Springs, MI. Rec days, night games, private parties, $20 admission, rentals and a field shop.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 36'%3E%3Cpath fill='%239b4526' d='M15 0 21 8h-3.2l5.2 7h-3.4l6 8h-4l6 8H2.4l6-8h-4l6-8H7l5.2-7H9z'/%3E%3Crect fill='%239b4526' x='13.2' y='31' width='3.6' height='5'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&amp;family=Exo+2:ital,wght@1,800&amp;family=Saira+Condensed:wght@600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&amp;family=Exo+2:ital,wght@1,800&amp;family=Barlow+Condensed:wght@500;600;700&amp;display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<script>(function(d){d.classList.remove('no-js');try{if(!sessionStorage.getItem('caf-boot')&&!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('show-loader');sessionStorage.setItem('caf-boot','1')}}catch(e){}})(document.documentElement)</script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -49,6 +50,7 @@
   <div class="wrap site-header__inner">
     <a class="brand" href="index.html" aria-label="Cedar Airsoft Field — home"><svg class="brand__mark" viewBox="0 0 30 36" fill="currentColor" aria-hidden="true"><path d="M15 0 21 8h-3.2l5.2 7h-3.4l6 8h-4l6 8H2.4l6-8h-4l6-8H7l5.2-7H9z"/><rect x="13.2" y="31" width="3.6" height="5" rx=".6"/></svg><span class="brand__text"><span class="brand__name">Cedar</span><span class="brand__sub">Airsoft Field</span></span></a>
     <nav class="site-nav" id="site-nav" aria-label="Main">
+      <span class="key nav-key" title="Press Q for the previous page" aria-hidden="true">Q</span>
       <ul>
         <li><a href="index.html" aria-current="page">Home</a></li>
         <li><a href="events.html">Events</a></li>
@@ -58,6 +60,7 @@
         <li><a href="plan-your-visit.html">Plan Your Visit</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
+      <span class="key nav-key" title="Press E for the next page" aria-hidden="true">E</span>
       <div class="site-nav__cta">
         <a class="btn" href="waiver.html">Sign the waiver</a>
         <a class="btn btn--ghost" href="tel:+16165203212"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg> Call (616) 520-3212</a>
@@ -68,6 +71,15 @@
     <button class="nav-toggle" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Open menu"><span class="nav-toggle__bars"></span></button>
   </div>
 </header>
+<div class="loader" aria-hidden="true">
+  <div class="loader__inner">
+    <p class="loader__mark">Cedar</p>
+    <p class="loader__sub">Airsoft Field &middot; Cedar Springs, MI</p>
+    <p class="loader__tip"><b>Tip</b><span>Waivers only need to be filled out once per calendar year.</span></p>
+    <div class="loader__bar"><i></i></div>
+    <div class="loader__row"><span>Loading field data</span><span>Click to skip</span></div>
+  </div>
+</div>
 
 <main id="main">
 
@@ -81,11 +93,20 @@
   </div>
   <div class="hero__slash" aria-hidden="true"></div>
   <div class="hero__frame" aria-hidden="true"><i></i></div>
-  <div class="reticle" aria-hidden="true"><svg viewBox="0 0 76 76" fill="none" stroke="currentColor" stroke-width="2"><circle cx="38" cy="38" r="26"/><path d="M38 2v18M38 56v18M2 38h18M56 38h18"/><circle cx="38" cy="38" r="2" fill="currentColor"/></svg></div>
+  <div class="compass" aria-hidden="true">
+    <div class="compass__window"><div class="compass__strip"></div><span class="compass__marker"></span></div>
+    <span class="compass__caret"></span>
+    <p class="compass__read">020&deg; N</p>
+  </div>
+  <div class="waypoint" aria-hidden="true">
+    <span class="waypoint__icon"></span>
+    <span class="waypoint__label">Cedar Airsoft Field<small>10 acres &middot; Cedar Springs, MI</small></span>
+  </div>
+  <div class="reticle" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M32 6v16M32 42v16M6 32h16M42 32h16"/><path d="M14 6H6v8M50 6h8v8M14 58H6v-8M50 58h8v-8" stroke-width="1"/><circle cx="32" cy="32" r="1.6" fill="currentColor" stroke="none"/></svg></div>
   <span class="hero__ph">Stock placeholder: masked adult players in woodland</span>
   <div class="wrap hero__grid">
     <div>
-      <p class="hero__kicker">10 acres, just north of Grand Rapids</p>
+      <p class="hero__kicker">Just north of Grand Rapids, MI</p>
       <h1 id="hero-h"><span class="l1"><span>Cedar</span></span><span class="l2"><span>Airsoft Field</span></span></h1>
       <p class="hero__lede">Rec games, night games, private parties, rentals and a field shop in Cedar Springs, Michigan. Come sling some BBs with us!</p>
       <div class="hero__actions">
@@ -94,7 +115,7 @@
       </div>
     </div>
     <aside class="clock" data-clock aria-label="Countdown to the next game">
-      <p class="clock__label"><span>Next game starts in</span><span class="clock__live" data-clock-status>Counting down</span></p>
+      <p class="clock__label"><span>Main objective: next game</span><span class="clock__live" data-clock-status>Counting down</span></p>
       <div class="clock__digits" aria-hidden="true">
         <div class="clock__unit"><b data-u="d">00</b><span>days</span></div>
         <div class="clock__unit"><b data-u="h">00</b><span>hours</span></div>
@@ -123,6 +144,7 @@
   <div class="wrap">
     <div class="section-head section-head--split">
       <div>
+        <p class="hud-label">Event schedule</p>
         <h2 id="ops-h">Upcoming games</h2>
         <p>We run on an event-style schedule. New dates go up here and on Facebook.</p>
       </div>
@@ -184,7 +206,8 @@
 <section class="section section--bone" id="plan" aria-labelledby="plan-h">
   <div class="wrap visit">
     <div class="reveal">
-      <h2 id="plan-h">Plan your visit</h2>
+      <p class="hud-label">Intel</p>
+        <h2 id="plan-h">Plan your visit</h2>
       <p class="lede">Where we are, when we play, and what to pack.</p>
       <ul class="info-list">
         <li><span class="k">Where</span><span class="v">17370 Trenton Ave NE, Cedar Springs, MI 49319<br><a href="https://www.google.com/maps/dir/?api=1&destination=17370+Trenton+Ave+NE,+Cedar+Springs,+MI+49319" rel="noopener">Get directions</a></span></li>
@@ -227,7 +250,8 @@
 <section class="section section--dark section--grid" aria-labelledby="new-h">
   <div class="wrap">
     <div class="section-head">
-      <h2 id="new-h">Your first game</h2>
+      <p class="hud-label">Briefing</p>
+        <h2 id="new-h">Your first game</h2>
       <p>We go over the field rules before games start. These five decide whether you play.</p>
     </div>
     <ol class="steps" data-stagger>
@@ -264,7 +288,8 @@
 <section class="section section--bone" id="pricing" aria-labelledby="price-h">
   <div class="wrap">
     <div class="section-head">
-      <h2 id="price-h">Pricing</h2>
+      <p class="hud-label">Loadout</p>
+        <h2 id="price-h">Pricing</h2>
       <p>Pay at the gate on game days. Pricing on large events may vary.</p>
     </div>
     <div class="offers" data-stagger>
@@ -338,6 +363,7 @@
         <blockquote class="field-quote"><p>Come sling some BBs with us!</p><cite>Cedar Airsoft Field</cite></blockquote>
       </div>
       <div class="reveal">
+        <p class="hud-label">Area of operations</p>
         <h2 id="field-h">The field</h2>
         <div class="acres"><span class="acres__num num" data-count="10">10</span><span class="acres__label">acres<br>of field</span></div>
         <p class="lede">Open ground with pallets for cover, wooded tree lines, bunkers, the Village and large buildings. Every game plays differently.</p>
@@ -357,7 +383,8 @@
 <section class="section section--slate" id="chrono" aria-labelledby="chrono-h">
   <div class="wrap">
     <div class="section-head">
-      <h2 id="chrono-h">Chrono &amp; engagement</h2>
+      <p class="hud-label">Weapon classes</p>
+        <h2 id="chrono-h">Chrono &amp; engagement</h2>
       <p>All airsoft guns are chronoed with <strong>0.20g (6mm) BBs</strong> and tagged with coloured zip ties before games start. Your tag sets how close you can engage.</p>
     </div>
     <figure class="vscale" aria-label="Chrono tiers on a 0 to 520 FPS scale">
@@ -393,6 +420,7 @@
     <div class="split" style="margin-bottom:clamp(48px,7vw,96px)">
       <div class="reveal"><div class="bracket"><figure class="photo ratio-32" data-ph="Stock placeholder: masked adult player"><img src="assets/img/PLACEHOLDER-player-goggles.webp" alt="A player in goggles and face mask aiming in the woods" width="1600" height="1067" loading="lazy" decoding="async"></figure><span class="corners" aria-hidden="true"><i></i></span></div></div>
       <div class="reveal">
+        <p class="hud-label">Rules of engagement</p>
         <h2 id="rules-h">Field rules</h2>
         <ul class="rule-list" style="margin-bottom:24px">
           <li>No shooting in staging! Guns on safe, mag out, barrel bags on. HPA lines disconnected, pistols holstered.</li>
@@ -407,6 +435,7 @@
     </div>
     <div class="waiver-panel reveal" id="waiver">
       <div>
+        <p class="hud-label">Required before play</p>
         <h2>Sign the waiver before you arrive</h2>
         <p>Fill it out at the field, or print it at home and bring it. Doing it at home gets you through admissions faster.</p>
         <ul class="rule-list">
@@ -432,6 +461,7 @@
     <div class="split split--rev" style="margin-bottom:clamp(48px,7vw,90px)">
       <div class="reveal"><div class="bracket"><figure class="photo ratio-45" data-ph="Stock placeholder: gear detail"><img src="assets/img/PLACEHOLDER-gear-detail.webp" alt="Close-up of a tactical belt with holster and magazine pouches" width="960" height="1200" loading="lazy" decoding="async"></figure><span class="corners" aria-hidden="true"><i></i></span></div></div>
       <div class="reveal">
+        <p class="hud-label">Armory</p>
         <h2 id="rent-h">No gear? Rent a kit</h2>
         <p class="kit-price">$20</p>
         <ul class="ticks" style="margin-bottom:22px">
@@ -445,6 +475,7 @@
     </div>
     <div class="section-head section-head--split">
       <div>
+        <p class="hud-label">Field store</p>
         <h2>Field shop</h2>
         <p>Bought in person on game days. <span class="ph">[PHASE 2 — online shop &middot; CONFIRM SCOPE]</span></p>
       </div>
@@ -468,7 +499,8 @@
   <div class="parties__bg"><img src="assets/img/PLACEHOLDER-woods-logs.webp" alt="" width="1600" height="720" loading="lazy" decoding="async"></div>
   <div class="wrap parties__grid">
     <div class="reveal">
-      <h2 id="party-h">Private parties</h2>
+      <p class="hud-label">Book the field</p>
+        <h2 id="party-h">Private parties</h2>
       <p class="lede">Birthday parties, bachelor or bachelorette parties, team building, graduation parties, family gatherings and more. Rent kits or bring your own gear. Book at least two weeks ahead.</p>
       <div class="actions">
         <a class="btn" href="parties.html#enquire">Plan a party</a>
@@ -537,6 +569,7 @@
     </div>
     <div class="footer-base">
       <span>&copy; <span data-year>2026</span> Cedar Airsoft Field &middot; <a href="privacy.html">Privacy</a> &middot; <span class="ph">[TERMS — DRAFT BEFORE LAUNCH]</span></span>
+      <span class="hints" aria-hidden="true"><span><span class="key">Q</span><span class="key">E</span> Switch page</span><span><span class="key">Tab</span> Move</span><span><span class="key">Enter</span> Select</span></span>
       <span>Spec mockup by ThinkFirst Studios &middot; stock photography is placeholder only</span>
     </div>
   </div>

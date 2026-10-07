@@ -103,6 +103,82 @@
     hero.addEventListener("pointerleave", function () { reticle.classList.remove("is-on"); });
   }
 
+  /* ---------- loading screen: first visit to home, once per session ---------- */
+  // html.show-loader is set by the inline script in <head>, so there is no flash.
+  var loader = document.querySelector(".loader");
+  if (loader && doc.classList.contains("show-loader")) {
+    var finished = false;
+    var finish = function () {
+      if (finished) return;
+      finished = true;
+      loader.classList.add("is-done");
+      window.setTimeout(function () { doc.classList.remove("show-loader"); }, 450);
+    };
+    loader.addEventListener("click", finish);
+    document.addEventListener("keydown", finish, { once: true });
+    window.setTimeout(finish, 1300);
+  }
+
+  /* ---------- compass strip: heading follows the pointer ---------- */
+  var compass = document.querySelector(".compass");
+  if (compass) {
+    var strip = compass.querySelector(".compass__strip");
+    var win = compass.querySelector(".compass__window");
+    var marker = compass.querySelector(".compass__marker");
+    var readout = compass.querySelector(".compass__read");
+    var names = { 0: "N", 45: "NE", 90: "E", 135: "SE", 180: "S", 225: "SW", 270: "W", 315: "NW" };
+    var html = "";
+    for (var deg = -360; deg <= 720; deg += 15) {
+      var d = ((deg % 360) + 360) % 360;
+      html += names[d] !== undefined ? '<span class="major"><b>' + names[d] + "</b></span>" : "<span><b>" + d + "</b></span>";
+    }
+    strip.innerHTML = html;
+    var PX = 2;               // 30px per 15 degrees
+    var FIELD_BEARING = 40;   // where the waypoint diamond sits on the strip (decorative)
+    var heading = 20, target = 20, spinning = false;
+    var cardinal = function (h) { var k = Math.round(h / 45) * 45 % 360; return names[k]; };
+    var draw = function () {
+      heading += (target - heading) * 0.12;
+      var w = win.clientWidth;
+      strip.style.transform = "translate3d(" + (w / 2 - ((heading + 360) * PX + 15)).toFixed(1) + "px,0,0)";
+      if (marker) marker.style.left = (w / 2 + (FIELD_BEARING - heading) * PX) + "px";
+      var hh = ((Math.round(heading) % 360) + 360) % 360;
+      if (readout) readout.textContent = ("00" + hh).slice(-3) + "\u00B0  " + cardinal(hh);
+      if (Math.abs(target - heading) > 0.05 && !reduceMotion) window.requestAnimationFrame(draw);
+      else spinning = false;
+    };
+    draw();
+    var heroEl = document.querySelector(".hero");
+    if (heroEl && !reduceMotion) {
+      heroEl.addEventListener("pointermove", function (e) {
+        var r = heroEl.getBoundingClientRect();
+        target = 20 + ((e.clientX - r.left) / r.width - 0.5) * 90;
+        if (!spinning) { spinning = true; window.requestAnimationFrame(draw); }
+      });
+      window.addEventListener("scroll", function () {
+        target = 20 + Math.min(window.scrollY, 900) / 10;
+        if (!spinning) { spinning = true; window.requestAnimationFrame(draw); }
+      }, { passive: true });
+    }
+  }
+
+  /* ---------- Q / E switch pages, like menu tabs ---------- */
+  var tabs = Array.prototype.slice.call(document.querySelectorAll(".site-nav li a"));
+  if (tabs.length) {
+    var current = tabs.findIndex(function (a) { return a.getAttribute("aria-current") === "page"; });
+    document.addEventListener("keydown", function (e) {
+      if (e.ctrlKey || e.metaKey || e.altKey || e.repeat) return;
+      var t = e.target;
+      if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
+      var k = (e.key || "").toLowerCase();
+      if (k !== "q" && k !== "e") return;
+      var base = current < 0 ? 0 : current;
+      var next = k === "e" ? (base + 1) % tabs.length : (base - 1 + tabs.length) % tabs.length;
+      if (current < 0 && k === "e") next = 0;
+      window.location.href = tabs[next].getAttribute("href");
+    });
+  }
+
   /* ---------- count-up: verified figures only (10 acres) ---------- */
   document.querySelectorAll("[data-count]").forEach(function (el) {
     var target = parseInt(el.getAttribute("data-count"), 10);

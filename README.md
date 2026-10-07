@@ -18,16 +18,18 @@ Built 2026-10-06 from `PROMPT.md`. Plain static HTML/CSS/JS, no build step. Open
 | `contact.html` | Contact cards, demo form, `[STAFF PHOTO]` frames | section of `/` |
 | `privacy.html` | **DRAFT** privacy page, written from what the site does | — (new) |
 
-## Design (v2: tactical direction, 2026-10-06)
+## Design (v3: tactical-HUD interface, 2026-10-06)
 
-Redesigned after Alex's feedback ("looks vibecoded"). References: dark paintball template with olive, khaki and slate tiles, and a red diagonal-slash paintball template. The goal is military in feel but still fun. This **overrides the brief's daylight direction** by Alex's call. The brief's hard bans still hold: no camo, stencils, skulls or bullet holes, and no neon-green-on-black.
+Third pass, at Alex's request for a "Ghost Recon UI". It's a game-HUD interface built from scratch: no game names, logos, fonts or assets are used. It **overrides the brief's daylight direction** by Alex's call. The brief's bans still hold: no camo, stencils, skulls or neon green.
 
-- **Palette, field-kit colours:** night olive `#10150F`, olive drab `#4F5B32`, khaki `#C8B98C`, coyote `#93714D`, slate `#3B4650`, bone `#EEE8D9`. Blaze `#E8642A` is used only for actions. Their live theme dark (`#1C231B`) sits inside this range. `[CONFIRM brand hex from logo files]`
-- **Type:** Saira Condensed for headlines. Exo 2 is kept for the wordmark (their current font). Barlow is the body face.
-- **The big idea:** a live countdown clock in the hero to their next published game, set against a diagonal blaze slash.
-- **Structure:** diagonal section cuts, HUD corner brackets on key photos, the schedule as briefing rows coloured by game type, first-game steps as olive, khaki, coyote and slate tiles, and a price list with dotted leaders like a supply sheet.
-- **Motion:** a hero load sequence (headline rises, slash draws in, khaki sheen), a reticle that follows the pointer over the hero (mouse only), the game-modes ticker, and a to-scale velocity bar on chrono that fills on scroll. Also a 10-acre count-up, parallax bands, the condensing header, and the sticky mobile bar (Events + Waiver). All of it is off under `prefers-reduced-motion`.
-- Cedar is a rec field, not a milsim operator. The site only borrows the look; the copy doesn't claim milsim events.
+- **Look:** near-black field green, translucent blurred panels with corner ticks, bone-white UI type, and blaze `#E8642A` as the only action colour. Olive, khaki, coyote and slate survive only as thin category stripes. Faint scanlines and a vignette over everything. `[CONFIRM brand hex from logo files]`
+- **Type:** Barlow Condensed for UI and headlines, Barlow for text, Exo 2 for the wordmark (their current font).
+- **HUD pieces:** a compass strip that turns with the pointer, a waypoint marker over the hero photo, and the countdown to the next published game as a main-objective tracker. Section titles have their own labels (Intel, Briefing, Loadout, Area of operations, Weapon classes, Rules of engagement, Armory). The map is restyled as a dark tactical map with a grid and pulse marker. Menu rows, shop items and the rules contents invert to white on hover or focus.
+- **Loading screen:** home page only, the first visit per browser session, about 1.3s. A click or any key skips it, and it never shows for reduced-motion users. The tip is one of their own published rules.
+- **Keyboard:** Q and E switch pages like menu tabs (ignored while typing in a form). Key hints are shown in the nav and footer.
+- **Motion:** the region-name title reveal, compass, reticle (mouse only), game-modes feed, segmented velocity bar, 10-acre count-up and parallax band. All of it is off under `prefers-reduced-motion`.
+- The compass heading and the waypoint's position on it are decorative. They don't claim to be a real bearing to the field.
+- Cedar is a rec field, not a milsim operator; the copy doesn't claim milsim events.
 
 ## Compliance notes (from PROMPT.md)
 
