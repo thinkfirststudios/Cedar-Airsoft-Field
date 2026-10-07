@@ -37,6 +37,13 @@ Third pass, at Alex's request for a "Ghost Recon UI". It's a game-HUD interface 
 - **Light sections:** every `section--bone` / `section--paper` is now an off-white "canvas" theme driven by CSS variables, so the same components flip automatically. The tactical map stays a dark inset.
 - **Texture:** film grain over the whole page; ripstop weave (the grid of military fabric, not camo) on light and dark sections; generated topographic contours (`assets/tex/topo-*.svg`, about 23 KB each); hazard-tape tabs on the light sections and footer; a faint hatch inside panels.
 
+### v5: their logo (2026-10-07)
+
+- Alex supplied their logo, a 320px JPG saved as `assets/logo/cedar-logo-supplied.jpg`. It's a crosshair ring with four pointers and an interlocking C and A in red.
+- Redrawn as SVG from measurements of that image: `cedar-logo.svg` (full colour on its light disc, as supplied), `cedar-logo-mono.svg` (for dark backgrounds) and `cedar-ring.svg` (ring only). **`[CONFIRM — replace with the client's original vector files]`** It's a faithful redraw, not their master artwork.
+- Used in: header and footer badge, loading screen, favicon. The hero's pointer reticle is now their crosshair ring.
+- **Accent colour changed to their logo red.** Sampled `#A21D0A`; UI fill `#B5220C`, text tint `#EF5D42`. This replaces the orange from v2 to v4, per the brief's instruction to take brand colour from the logo.
+
 ## Compliance notes (from PROMPT.md)
 
 - Chrono table reproduced exactly from the brief (and checked against their live homepage). One shared source in the generator, so it's identical on Home, Events and Rules.
