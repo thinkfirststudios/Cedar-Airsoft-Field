@@ -857,3 +857,13 @@ h2 { font-size: clamp(2.2rem, 3.6vw + .9rem, 3.9rem); line-height: .95; }
 .loader__logo { width: clamp(96px, 14vw, 132px); height: auto; margin-bottom: 18px; filter: drop-shadow(0 8px 24px rgba(0, 0, 0, .6)); animation: rise .6s var(--ease) both; }
 .reticle { color: rgba(239, 93, 66, .9); width: 70px; height: 70px; margin: -35px 0 0 -35px; }
 .reticle svg { animation: none; }
+
+/* ---------- waypoint: pinned to the compass marker by a leader line ---------- */
+.waypoint { left: 0; top: 64px; width: 260px; margin-left: -130px; gap: 0; transition: opacity .3s; }
+.waypoint::after { content: none; }
+.waypoint.is-off { opacity: 0; }
+.waypoint__lead { display: block; width: 1px; height: clamp(80px, 15vh, 160px); background: repeating-linear-gradient(to bottom, rgba(239, 93, 66, .9) 0 4px, transparent 4px 8px); }
+.waypoint__icon { margin-top: 2px; }
+.waypoint__plate { margin-top: 12px; padding: 8px 14px 7px; text-align: center; background: var(--ticks), rgba(6, 8, 7, .74); border: 1px solid var(--line); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+.waypoint__plate b { display: block; font: 600 .95rem/1.1 var(--display); letter-spacing: .18em; text-transform: uppercase; color: #fff; }
+.waypoint__plate small { display: block; margin-top: 3px; font: 600 .78rem/1.2 var(--display); letter-spacing: .16em; text-transform: uppercase; color: var(--accent-hi); }
