@@ -124,10 +124,7 @@
   if (compass) {
     var strip = compass.querySelector(".compass__strip");
     var win = compass.querySelector(".compass__window");
-    var marker = compass.querySelector(".compass__marker");
     var readout = compass.querySelector(".compass__read");
-    var waypoint = document.querySelector(".waypoint");
-    var heroBox = compass.closest(".hero");
     var names = { 0: "N", 45: "NE", 90: "E", 135: "SE", 180: "S", 225: "SW", 270: "W", 315: "NW" };
     var html = "";
     for (var deg = -360; deg <= 720; deg += 15) {
@@ -136,21 +133,12 @@
     }
     strip.innerHTML = html;
     var PX = 2;               // 30px per 15 degrees
-    var FIELD_BEARING = 40;   // where the waypoint diamond sits on the strip (decorative)
     var heading = 20, target = 20, spinning = false;
     var cardinal = function (h) { var k = Math.round(h / 45) * 45 % 360; return names[k]; };
     var draw = function () {
       heading += (target - heading) * 0.12;
       var w = win.clientWidth;
       strip.style.transform = "translate3d(" + (w / 2 - ((heading + 360) * PX + 15)).toFixed(1) + "px,0,0)";
-      var mx = w / 2 + (FIELD_BEARING - heading) * PX;
-      if (marker) marker.style.left = mx + "px";
-      // the waypoint hangs off the compass marker, so it tracks the same bearing
-      if (waypoint && heroBox) {
-        var off = win.getBoundingClientRect().left - heroBox.getBoundingClientRect().left;
-        waypoint.style.translate = (off + mx).toFixed(1) + "px 0";
-        waypoint.classList.toggle("is-off", mx < w * 0.2 || mx > w * 0.8);
-      }
       var hh = ((Math.round(heading) % 360) + 360) % 360;
       if (readout) readout.textContent = ("00" + hh).slice(-3) + "\u00B0  " + cardinal(hh);
       if (Math.abs(target - heading) > 0.05 && !reduceMotion) window.requestAnimationFrame(draw);
@@ -228,13 +216,6 @@
     rows.forEach(function (r) { r.classList.toggle("is-next", r.getAttribute("data-date") === firstDate); });
   }
   document.querySelectorAll("[data-empty-events]").forEach(function (el) { el.hidden = upcoming.length > 0; });
-
-  /* waypoint label shows the next published game */
-  var wpSub = document.querySelector("[data-waypoint-sub]");
-  if (wpSub && upcoming.length) {
-    var nd = at(upcoming[0].getAttribute("data-date"), "12:00");
-    wpSub.textContent = "Next game · " + nd.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
-  }
 
   /* ---------- countdown clock to the next game ---------- */
   var clock = document.querySelector("[data-clock]");

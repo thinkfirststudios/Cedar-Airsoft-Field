@@ -24,11 +24,12 @@ Third pass, at Alex's request for a "Ghost Recon UI". It's a game-HUD interface 
 
 - **Look:** near-black field green, translucent blurred panels with corner ticks, bone-white UI type, and blaze `#E8642A` as the only action colour. Olive, khaki, coyote and slate survive only as thin category stripes. Faint scanlines and a vignette over everything. `[CONFIRM brand hex from logo files]`
 - **Type:** Barlow Condensed for UI and headlines, Barlow for text, Exo 2 for the wordmark (their current font).
-- **HUD pieces:** a compass strip that turns with the pointer, a waypoint marker over the hero photo, and the countdown to the next published game as a main-objective tracker. Section titles have their own labels (Intel, Briefing, Loadout, Area of operations, Weapon classes, Rules of engagement, Armory). The map is restyled as a dark tactical map with a grid and pulse marker. Menu rows, shop items and the rules contents invert to white on hover or focus.
+- **HUD pieces:** a compass strip that turns with the pointer, and the countdown to the next published game as a main-objective tracker. Section titles have their own labels (Intel, Briefing, Loadout, Area of operations, Weapon classes, Rules of engagement, Armory). The map is restyled as a dark tactical map with a grid and pulse marker. Menu rows, shop items and the rules contents invert to white on hover or focus.
 - **Loading screen:** home page only, the first visit per browser session, about 1.3s. A click or any key skips it, and it never shows for reduced-motion users. The tip is one of their own published rules.
 - **Keyboard:** Q and E switch pages like menu tabs (ignored while typing in a form). Key hints are shown in the nav and footer.
 - **Motion:** the region-name title reveal, compass, reticle (mouse only), game-modes feed, segmented velocity bar, 10-acre count-up and parallax band. All of it is off under `prefers-reduced-motion`.
-- The compass heading and the waypoint's position on it are decorative. They don't claim to be a real bearing to the field.
+- The compass heading is decorative. It doesn't claim to be a real bearing to the field.
+- A waypoint marker over the hero photo was tried and removed on 2026-10-07 (reviewer found it distracting).
 - Cedar is a rec field, not a milsim operator; the copy doesn't claim milsim events.
 
 ### v4 refinements (2026-10-06, review feedback)
